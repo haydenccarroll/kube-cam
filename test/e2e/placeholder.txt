@@ -1,0 +1,3 @@
+where all the end-to-end tests will be written. 
+This will only get done once everything else is done. 
+All unit tests for each sub-system should live in that subsystem.

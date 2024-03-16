@@ -1,4 +1,4 @@
-# KubeCam
+# kube-cam
 A simulated security camera system made with kubernetes
 
 ## Description
@@ -10,6 +10,8 @@ CameraDeployment - sends fake camera data to a queue
 FootageAlterer - reads from camera deployment queue and adds a watermark ontop. puts the altered footage into a queue.
 
 FootageStorer - reads from the FootageAlterer queue and stores it in some way
+
+FootageQueuer - queue implementation to send footage data from one application to another
 
 ## Development
 ### Overview
@@ -24,4 +26,20 @@ Here's a list of tools I think we should use
 * `k9s` is a nice little GUI that lives in your terminal. We can use this to view deployments, config maps, etc on a kubernetes cluster.
 * `kind`is a kubernetes emulator(?) that can be used to create a kubernetes cluster on your local machine for local development. We can also use this to create a kubernetes cluster for CI stuff.
 * IDE - whatever. I use VSCode, Goland, or whatever other Jetbrains IDE
-* AWS. I haven't exactly decided on where we are going to deploy this kubernetes cluster to. I am familar with Google Kubernetes Engine, but am down to try something new. I was hoping we can stick with local development with `kind` and deploy this in the cloud once it is "done".
+
+## Contributing
+### Local Development
+
+First, install these applications
+- `docker`
+- `kind`
+- `k9s`
+- `make`
+- `kubectl`
+
+All implementation for each subsystem goes in each `apps/subdir` subdirectory. These should all have unit tests and a nice README.md. They should all have a `make build` command defined in them that will build a docker image for the cluster to use.
+
+Creating and using the local kubernetes cluster
+1. Run `make create-cluster` to create a new kubernetes cluster from scratch
+2. Run `make apply` to apply all of the kubernetes manifests defined in `k8s/`
+3. Run `k9s` to view deployments, pods, configmaps, logs, etc for the cluster
