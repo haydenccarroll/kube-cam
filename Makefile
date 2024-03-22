@@ -3,7 +3,6 @@ CLUSTER_CONTEXT=kind-$(CLUSTER_NAME)
 APP_DIR=apps
 create-cluster:
 	kind create cluster --name $(CLUSTER_NAME)
-	kubectl delete namespace default --context $(CLUSTER_CONTEXT)
 delete-cluster:
 	kind delete cluster --name $(CLUSTER_NAME)
 apply:
