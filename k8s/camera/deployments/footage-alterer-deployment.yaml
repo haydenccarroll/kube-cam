@@ -4,7 +4,7 @@ metadata:
   name: footage-alterer
   namespace: camera
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: example
@@ -15,6 +15,5 @@ spec:
     spec:
       containers:
       - name: example-image
-        image: haydenccarroll/hello-world:latest
-        ports:
-        - containerPort: 8080
+        image: ubuntu:latest
+        imagePullPolicy: IfNotPresent

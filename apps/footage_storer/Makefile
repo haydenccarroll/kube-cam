@@ -1,2 +1,5 @@
+include ../../Makefile
+
 build:
-	@echo "Built and pushed local footage_storer docker image"
+	docker build -t footage_getter .
+	kind load docker-image footage_getter:latest --name $(CLUSTER_NAME)
