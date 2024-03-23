@@ -16,5 +16,4 @@ spec:
       containers:
       - name: example-image
         image: docker.io/library/hello-world:latest
-        ports:
-        - containerPort: 8080
+        imagePullPolicy: IfNotPresent

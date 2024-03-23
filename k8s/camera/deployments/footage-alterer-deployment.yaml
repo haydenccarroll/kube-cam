@@ -16,7 +16,4 @@ spec:
       containers:
       - name: example-image
         image: ubuntu:latest
-        command: [ "tail" ]
-        args: [ "-f", "/dev/null" ] # Keep the container running
-        ports:
-        - containerPort: 8080
+        imagePullPolicy: IfNotPresent

@@ -4,7 +4,7 @@ metadata:
   name: footage-getter
   namespace: camera
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: example
@@ -14,7 +14,6 @@ spec:
         app: example
     spec:
       containers:
-      - name: example-image
-        image: docker.io/library/hello-world:latest
-        ports:
-        - containerPort: 8080
+      - name: footage-getter-image
+        image: footage_getter:latest
+        imagePullPolicy: IfNotPresent
