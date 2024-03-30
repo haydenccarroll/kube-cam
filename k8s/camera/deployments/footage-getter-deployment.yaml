@@ -6,8 +6,8 @@ metadata:
 data:
   HTTP_CLIENT_TIMEOUT: "10s"
   RABBITMQ_URL: "amqp://rabbitmq-service.camera.svc.cluster.local:5672"
+  WRITE_QUEUE_NAME: "footage"
   FRAME_GETTER_URL: "https://http.cat/images/100.jpg"
-  # Add more environment variables as needed
 ---
 apiVersion: apps/v1
 kind: Deployment
