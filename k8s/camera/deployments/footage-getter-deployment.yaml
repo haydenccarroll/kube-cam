@@ -1,3 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: footage-getter-config
+  namespace: camera
+data:
+  HTTP_CLIENT_TIMEOUT: "10s"
+  RABBITMQ_URL: "amqp://rabbitmq-service.camera.svc.cluster.local:5672"
+  FRAME_GETTER_URL: "https://http.cat/images/100.jpg"
+  # Add more environment variables as needed
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,3 +28,6 @@ spec:
       - name: footage-getter-image
         image: footage_getter:latest
         imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: footage-getter-config
