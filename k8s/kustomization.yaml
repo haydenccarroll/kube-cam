@@ -5,5 +5,6 @@ resources:
   - ./camera/namespace.yaml
   - ./camera/deployments/footage-alterer-deployment.yaml
   - ./camera/deployments/footage-getter-deployment.yaml
+  - ./camera/deployments/footage-storer-deployment.yaml
   - ./camera/deployments/rabbitmq-deployment.yaml
   - ./camera/persistentvolume/main_persistent_volume.yaml

@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/haydenccarroll/kube-cam/apps/footage_getter/framegetter"
 	"github.com/haydenccarroll/kube-cam/apps/footage_getter/internal/footagesender"
+	"github.com/haydenccarroll/kube-cam/apps/footage_getter/internal/framegetter"
 )
 
 type Config struct {
@@ -46,7 +46,8 @@ func buildHTTPClient() (*http.Client, error) {
 
 func buildRabbitMQFootageSender() (*footagesender.RabbitMQ, error) {
 	url := os.Getenv("RABBITMQ_URL")
-	return footagesender.NewRabbitMQ(url)
+	queueName := os.Getenv("WRITE_QUEUE_NAME")
+	return footagesender.NewRabbitMQ(url, queueName)
 }
 
 func buildFrameGetter(httpClient *http.Client) *framegetter.FrameGetterHTTPCatImpl {

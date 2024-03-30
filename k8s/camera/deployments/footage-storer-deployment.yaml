@@ -1,10 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: footage-storer-config
+  namespace: camera
+data:
+  RABBITMQ_URL: "amqp://rabbitmq-service.camera.svc.cluster.local:5672"
+  STORE_PATH: "/var/footage"
+  READ_QUEUE_NAME: "footage"
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: footage-storer
   namespace: camera
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: example
@@ -14,6 +24,28 @@ spec:
         app: example
     spec:
       containers:
-      - name: example-image
-        image: docker.io/library/hello-world:latest
+      - name: footage-storer-image
+        image: footage_storer:latest
         imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: footage-storer-config
+        volumeMounts:
+        - name: footage-volume-data
+          mountPath: /var/footage
+      volumes:
+        - name: footage-volume-data
+          persistentVolumeClaim:
+            claimName: footage-volume-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: footage-volume-data
+  namespace: camera
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

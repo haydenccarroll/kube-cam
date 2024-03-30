@@ -9,9 +9,10 @@ import (
 type RabbitMQ struct {
 	Connection *amqp091.Connection
 	Channel    *amqp091.Channel
+	queueName  string
 }
 
-func NewRabbitMQ(url string) (*RabbitMQ, error) {
+func NewRabbitMQ(url string, queueName string) (*RabbitMQ, error) {
 	conn, err := amqp091.Dial(url)
 	if err != nil {
 		return nil, err
@@ -25,6 +26,7 @@ func NewRabbitMQ(url string) (*RabbitMQ, error) {
 	return &RabbitMQ{
 		Connection: conn,
 		Channel:    ch,
+		queueName:  queueName,
 	}, nil
 }
 
@@ -33,14 +35,14 @@ func (r *RabbitMQ) Close() {
 	r.Connection.Close()
 }
 
-func (r *RabbitMQ) PublishToQueue(ctx context.Context, queueName string, data []byte) error {
+func (r *RabbitMQ) PublishToQueue(ctx context.Context, data []byte) error {
 	q, err := r.Channel.QueueDeclare(
-		queueName, // name
-		false,     // durable
-		false,     // delete when unused
-		false,     // exclusive
-		false,     // no-wait
-		nil,       // arguments
+		r.queueName, // name
+		true,        // durable
+		false,       // delete when unused
+		false,       // exclusive
+		false,       // no-wait
+		nil,         // arguments
 	)
 	if err != nil {
 		return err

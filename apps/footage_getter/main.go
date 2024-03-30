@@ -29,7 +29,7 @@ func continuouslySendFrames(ctx context.Context, config *build.Config) {
 				continue
 			}
 
-			err = config.RabbitMQ.PublishToQueue(ctx, "frames", frame)
+			err = config.RabbitMQ.PublishToQueue(ctx, frame)
 			if err != nil {
 				log.Printf("Failed to publish frame: %v", err)
 				continue
