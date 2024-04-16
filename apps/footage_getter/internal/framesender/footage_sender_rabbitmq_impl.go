@@ -1,9 +1,7 @@
-package footagesender
+package framesender
 
 import (
 	"context"
-
-	"github.com/rabbitmq/amqp091-go"
 )
 
 type RabbitMQ struct {

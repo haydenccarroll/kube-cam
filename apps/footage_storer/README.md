@@ -1,2 +1,8 @@
-where implementation for app that will store the footage into a database is defined
-pancel99 is the champion for this.
+# Footage Storer
+
+Stores a photo from a RabbitMQ queue to a directory on a kubernetes persistent volume.
+
+Build docker image and push locally using the following command:
+```bash
+make build
+```
